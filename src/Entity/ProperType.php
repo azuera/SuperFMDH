@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProperTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProperTypeRepository::class)]
@@ -21,6 +23,17 @@ class ProperType
 
     #[ORM\Column]
     private ?\DateTimeImmutable $update_at = null;
+
+    /**
+     * @var Collection<int, Listing>
+     */
+    #[ORM\OneToMany(targetEntity: Listing::class, mappedBy: 'property_type_id')]
+    private Collection $listings;
+
+    public function __construct()
+    {
+        $this->listings = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -62,4 +75,38 @@ class ProperType
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Listing>
+     */
+    public function getListings(): Collection
+    {
+        return $this->listings;
+    }
+
+    public function addListing(Listing $listing): static
+    {
+        if (!$this->listings->contains($listing)) {
+            $this->listings->add($listing);
+            $listing->setPropertyTypeId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListing(Listing $listing): static
+    {
+        if ($this->listings->removeElement($listing)) {
+            // set the owning side to null (unless already changed)
+            if ($listing->getPropertyTypeId() === $this) {
+                $listing->setPropertyTypeId(null);
+            }
+        }
+
+        return $this;
+    }
+        public function __toString(): string
+{
+    return $this->name ?: 'Utilisateur #' . $this->id;
+}
 }

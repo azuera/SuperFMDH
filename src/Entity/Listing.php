@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ListingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,22 @@ class Listing
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image_url = null;
+
+    #[ORM\ManyToOne(inversedBy: 'listings')]
+    private ?ProperType $property_type_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'listings')]
+    private ?TransactionType $transaction_type_id = null;
+
+    #[ORM\ManyToOne(inversedBy: 'listings')]
+    private ?User $user_id = null;
+
+   
+
+    public function __construct()
+    {
+        
+    }
 
    
 
@@ -95,6 +113,47 @@ class Listing
 
         return $this;
     }
+
+    public function getPropertyTypeId(): ?ProperType
+    {
+        return $this->property_type_id;
+    }
+
+    public function setPropertyTypeId(?ProperType $property_type_id): static
+    {
+        $this->property_type_id = $property_type_id;
+
+        return $this;
+    }
+
+    public function getTransactionTypeId(): ?TransactionType
+    {
+        return $this->transaction_type_id;
+    }
+
+    public function setTransactionTypeId(?TransactionType $transaction_type_id): static
+    {
+        $this->transaction_type_id = $transaction_type_id;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): static
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+   
+
+
+  
 
    
 
