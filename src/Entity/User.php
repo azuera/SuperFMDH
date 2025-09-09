@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks] // ← Ajoutez cette ligne importante
 class User
 {
     #[ORM\Id]
@@ -25,6 +27,27 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $update_at = null;
 
+    // Ajoutez le constructeur pour initialiser les dates
+    public function __construct()
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->update_at = new \DateTimeImmutable();
+    }
+
+    // Ajoutez les lifecycle callbacks
+    #[ORM\PrePersist]
+    public function setTimestampsOnCreate(): void
+    {
+        $this->created_at = new \DateTimeImmutable();
+        $this->update_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function setTimestampsOnUpdate(): void
+    {
+        $this->update_at = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -38,7 +61,7 @@ class User
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
+        $this->update_at = new \DateTimeImmutable(); // Mise à jour automatique
         return $this;
     }
 
@@ -50,7 +73,7 @@ class User
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
+        $this->update_at = new \DateTimeImmutable(); // Mise à jour automatique
         return $this;
     }
 
@@ -62,7 +85,6 @@ class User
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
-
         return $this;
     }
 
@@ -74,7 +96,6 @@ class User
     public function setUpdateAt(\DateTimeImmutable $update_at): static
     {
         $this->update_at = $update_at;
-
         return $this;
     }
 }

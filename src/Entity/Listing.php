@@ -29,6 +29,8 @@ class Listing
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image_url = null;
 
+   
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,4 +95,8 @@ class Listing
 
         return $this;
     }
+
+   
+
+   
 }
