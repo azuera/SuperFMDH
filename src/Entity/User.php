@@ -20,10 +20,10 @@ class User
     private ?string $password = null;
 
     #[ORM\Column]
-    private ?\DateTime $created_at = null;
+    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column]
-    private ?\DateTime $update_at = null;
+    private ?\DateTimeImmutable $update_at = null;
 
     public function getId(): ?int
     {
@@ -54,24 +54,24 @@ class User
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): static
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTime
+    public function getUpdateAt(): ?\DateTimeImmutable
     {
         return $this->update_at;
     }
 
-    public function setUpdateAt(\DateTime $update_at): static
+    public function setUpdateAt(\DateTimeImmutable $update_at): static
     {
         $this->update_at = $update_at;
 
