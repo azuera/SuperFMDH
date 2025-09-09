@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
@@ -27,11 +29,20 @@ class User
     #[ORM\Column]
     private ?\DateTimeImmutable $update_at = null;
 
+    /**
+     * @var Collection<int, Listing>
+     */
+    #[ORM\OneToMany(targetEntity: Listing::class, mappedBy: 'user_id')]
+    private Collection $listings;
+
+
+
     // Ajoutez le constructeur pour initialiser les dates
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->update_at = new \DateTimeImmutable();
+        $this->listings = new ArrayCollection();
     }
 
     // Ajoutez les lifecycle callbacks
@@ -98,4 +109,42 @@ class User
         $this->update_at = $update_at;
         return $this;
     }
+
+    /**
+     * @return Collection<int, Listing>
+     */
+    public function getListings(): Collection
+    {
+        return $this->listings;
+    }
+
+    public function addListing(Listing $listing): static
+    {
+        if (!$this->listings->contains($listing)) {
+            $this->listings->add($listing);
+            $listing->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListing(Listing $listing): static
+    {
+        if ($this->listings->removeElement($listing)) {
+            // set the owning side to null (unless already changed)
+            if ($listing->getUserId() === $this) {
+                $listing->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(): string
+{
+    return $this->email ?: 'Utilisateur #' . $this->id;
+}
+
+    
+
+    
 }
