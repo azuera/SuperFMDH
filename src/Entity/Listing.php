@@ -40,6 +40,8 @@ class Listing
     #[ORM\ManyToOne(inversedBy: 'listings')]
     private ?User $user_id = null;
 
+  
+
    
 
     public function __construct()
@@ -149,6 +151,8 @@ class Listing
 
         return $this;
     }
+
+    
 
    
 

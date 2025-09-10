@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une nouvelle maison{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1>Ajouter une nouvelle maison</h1>
+    
+    {{ form_start(form) }}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.title) }}
+                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.title) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.price) }}
+                {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.price) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.city) }}
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                {{ form_label(form.property_type_id) }}
+                {{ form_widget(form.property_type_id, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.property_type_id) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.transaction_type_id) }}
+                {{ form_widget(form.transaction_type_id, {'attr': {'class': 'form-control'}}) }}
+                {{ form_errors(form.transaction_type_id) }}
+            </div>
+            
+            
+        </div>
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.image_url) }}
+        {{ form_widget(form.image_url, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.image_url) }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Créer la maison</button>
+    <a href="{{ path('app_house') }}" class="btn btn-secondary">Retour à la liste</a>
+    
+    {{ form_end(form) }}
+</div>
+{% endblock %}
