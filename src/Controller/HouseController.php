@@ -31,12 +31,12 @@ final class HouseController extends AbstractController
         ]);
     }
     
-    // ⚠️ CETTE ROUTE DOIT ÊTRE PLACÉE AVANT LA ROUTE AVEC {id} 
+    
     #[Route('/house/new', name: 'app_house_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, ProperTypeRepository $properTypeRepo, TransactionTypeRepository $transactionTypeRepo, UserRepository $userRepo): Response
     {
         $user = $this->getUser();
-        // Vérifiez si des données existent dans les tables liées
+        
         $hasProperTypes = count($properTypeRepo->findAll()) > 0;
         $hasTransactionTypes = count($transactionTypeRepo->findAll()) > 0;
         $hasUsers = count($userRepo->findAll()) > 0;
@@ -66,7 +66,7 @@ final class HouseController extends AbstractController
         ]);
     }
     
-    // ⚠️ CETTE ROUTE DOIT ÊTRE PLACÉE APRÈS LA ROUTE /new ⚠️
+    
     #[Route('/house/{id}', name: 'app_house_show')]
     public function show(int $id, ListingRepository $listingRepository): Response
     {

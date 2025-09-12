@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = ['ROLE_USER'];
     }
 
-    // Lifecycle callbacks
+   
     #[ORM\PrePersist]
     public function setTimestampsOnCreate(): void
     {
@@ -85,8 +85,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUserIdentifier(): string
